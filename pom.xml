@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>holymind84</groupId>
-	<artifactId>_mule-sys-python</artifactId>
+	<artifactId>mule-sys-python</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>mule-application</packaging>
 
