@@ -1,7 +1,7 @@
 # mule-sys-python
 Mule4 Example. How to use Python 2.x with MuleSoft
 
-# Prerequisite
+## Prerequisite
 
 Add the following Python 2.x Libraries under src/main/resources/lib
 - requests
@@ -10,10 +10,10 @@ Add the following Python 2.x Libraries under src/main/resources/lib
 - certifi
 - idna
 
-Add the Python Path
+## Add the Python Path
 
 -M-Dpython.path=<< Path with Libraries>>
 
-- Dev machine -M-Dpython.path=C:\devel\Mule\workspace\mentor\wk5\_old1\src\main\resources\lib
+- Dev machine -M-Dpython.path=C:\workspace\mule-sys-python\src\main\resources\lib
 - CH 1.0 python.path=/opt/mule/mule-4.4.0/apps/mule-sys-python/lib
 - CH 2.0 python.path=/opt/mule/apps/mule-sys-python/lib
