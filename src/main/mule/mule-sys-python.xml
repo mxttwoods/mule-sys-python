@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="3bee4c1e-93f9-4299-9799-3ad27ed0b24e" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="get-random-withPython" doc:id="988f8a66-dcd4-4e69-85e9-045ee69e5328" >
+		<http:listener doc:name="GET /random" doc:id="784951bb-2fa4-4377-baf1-d5d239935d7a" config-ref="HTTP_Listener_config" path="/random" allowedMethods="GET"/>
+		<scripting:execute doc:name="Python Code" doc:id="a49705f4-cb34-49f7-bfa1-cec46b96191c" engine="python">
+			<scripting:code ><![CDATA[import random
+
+result = random.randint(0,100)]]></scripting:code>
+		</scripting:execute>
+		<ee:transform doc:name="Transform Message" doc:id="d4e3e9cf-de58-454e-b6bd-59a8414f07b8" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	
+	<flow name="get-random-withPython2" doc:id="33b0b9f1-c64f-455a-bf46-4653a8aa26b6" >
+		<http:listener doc:name="GET /random2" doc:id="048e51cc-62ba-4335-9b78-632d74d2f20d" config-ref="HTTP_Listener_config" path="/random2" allowedMethods="GET"/>
+		<scripting:execute doc:name="random.py" doc:id="bc43a865-919e-4a77-b4a8-b907869e9fa6" engine="python">
+			<scripting:code ><![CDATA[${file::script/random.py}]]></scripting:code>
+		</scripting:execute>
+		<ee:transform doc:name="Transform Message" doc:id="47e70705-b193-40a3-9d09-74e45020da42" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	
+	
+	
+	<flow name="requests-withPython" doc:id="0d8479de-64d2-4ad0-a6f3-b289e2dc3975" >
+		<http:listener doc:name="GET /req" doc:id="67e478f8-0844-49bb-82cf-a5e609d71043" config-ref="HTTP_Listener_config" path="/req"/>
+		<scripting:execute doc:name="req.py" doc:id="b78af1b0-37e6-4b85-bb08-c5c5beb00a5c" engine="python">
+			<scripting:code ><![CDATA[${file::script/req.py}]]></scripting:code>
+		</scripting:execute>
+		<ee:transform doc:name="Transform Message" doc:id="9058291f-2946-4245-9f76-91346654ff35" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output text/plain
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
